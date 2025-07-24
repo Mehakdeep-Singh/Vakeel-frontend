@@ -96,6 +96,9 @@ import React, { useRef, useState } from 'react';
 function App() {
   const [isRecording, setIsRecording] = useState(false);
   const [recordedFile, setRecordedFile] = useState(null);
+  // 🔹 Step 1: Add this to useState block
+  const [transcribedText, setTranscribedText] = useState('');
+
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
 
@@ -157,6 +160,7 @@ function App() {
 
       const data = await response.json();
       console.log('✅ Server response:', data);
+      setTranscribedText(data.text || 'No text received.');
     } catch (error) {
       console.error('❌ Error sending recording to server:', error);
     }
@@ -186,6 +190,16 @@ function App() {
         <div style={{ marginTop: '1rem' }}>
           <p>🎧 Audio file is ready</p>
           <audio controls src={URL.createObjectURL(recordedFile)} />
+        </div>
+        
+      )}
+
+      {transcribedText && (
+        <div style={{ marginTop: '2rem' }}>
+          <h3>📝 Transcribed Text:</h3>
+          <pre style={{ whiteSpace: 'pre-wrap', textAlign: 'left', background: '#f3f3f3', padding: '1rem', borderRadius: '5px' }}>
+            {transcribedText}
+          </pre>
         </div>
       )}
     </div>
