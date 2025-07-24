@@ -144,7 +144,7 @@ function App() {
   const sendRecordingToServer = async (blob) => {
     try {
       const base64Audio = await blobToBase64(blob);
-      const response = await fetch('http://localhost:5000/recording', {
+      const response = await fetch('https://vakeel-frontend.onrender.com/recording', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
